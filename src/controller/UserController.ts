@@ -62,6 +62,7 @@ class UserController {
 
         // Send Respond if body undefined
         if (!username && !password) {
+            // Send Response
             res.status(400).json({
                 status: res.statusCode,
                 message: "Please fill all Data !",
@@ -74,6 +75,7 @@ class UserController {
                 },
             });
             if (!usernameExist) {
+                // Send Response
                 res.status(400).json({
                     status: res.statusCode,
                     message: "Username Not Found !"
@@ -82,12 +84,14 @@ class UserController {
                 // Check Password
                 bcrypt.compare(password, usernameExist['password']).then(function (result) {
                     if (result) {
+                        // Send Response
                         res.status(200).json({
                             status: res.statusCode,
                             message: "OK",
                             data: usernameExist
                         });
                     } else {
+                        // Send Response
                         res.status(400).json({
                             status: res.statusCode,
                             message: "Wrong Password !"

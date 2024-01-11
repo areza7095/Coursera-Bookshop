@@ -19,7 +19,7 @@ model Users {
 // Define model for Books table
 model Books {
   id      Int      @id @default(autoincrement())
-  isbn    Int
+  isbn    Int      @unique
   Author  String
   Title   String
   reviews Review[]
@@ -27,13 +27,13 @@ model Books {
 
 // Define model for Review table
 model Review {
-  id      Int    @id @default(autoincrement())
-  userId  Int
-  bookId  Int
-  review  String
-  stars   Int
-  User    Users  @relation(fields: [userId], references: [id])
-  Book    Books  @relation(fields: [bookId], references: [id])
-  
+  id     Int    @id @default(autoincrement())
+  userId Int    
+  bookId Int
+  review String
+  stars  Int
+  User   Users  @relation(fields: [userId], references: [id])
+  Book   Books  @relation(fields: [bookId], references: [id])
+
   @@unique([userId, bookId])
 }
