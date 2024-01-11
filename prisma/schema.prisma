@@ -7,14 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id     Int         @id @default(autoincrement())
-  name   String      @db.VarChar(99)
-  email  String      @db.VarChar(99)
-  status user_status
+// Define model for Users table
+model Users {
+  id        Int      @id @default(autoincrement())
+  full_name String
+  username  String   @unique
+  password  String
+  reviews   Review[]
 }
 
-enum user_status {
-  active
-  inactive
+// Define model for Books table
+model Books {
+  id      Int      @id @default(autoincrement())
+  isbn    Int
+  Author  String
+  Title   String
+  reviews Review[]
+}
+
+// Define model for Review table
+model Review {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  bookId  Int
+  review  String
+  stars   Int
+  User    Users  @relation(fields: [userId], references: [id])
+  Book    Books  @relation(fields: [bookId], references: [id])
+  
+  @@unique([userId, bookId])
 }
